@@ -29,8 +29,7 @@ public class Tutor {
         this.telefone = dto.telefone();
         this.email = dto.email();
     }
-    public Tutor(DadosAtualizarTutorDto dto) {
-        this.id = dto.id();
+    public void atualizarDados(DadosAtualizarTutorDto dto) {
         this.nome = dto.nome();
         this.telefone = dto.telefone();
         this.email = dto.email();

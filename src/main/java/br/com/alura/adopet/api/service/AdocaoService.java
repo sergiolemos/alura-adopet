@@ -26,7 +26,6 @@ public class AdocaoService {
     @Autowired
     private TutorRepository tutorRepository;
 
-    @Autowired
     private List<ValidacaoSolicitacaoAdocao> validacoes;
 
     public void solicitar(SolicitacaoAdocaoDto dto) {
@@ -35,7 +34,7 @@ public class AdocaoService {
 
         validacoes.forEach(v -> v.validar(dto));
 
-        Adocao adocao = new Adocao(tutor,pet, dto.motivo());
+        Adocao adocao = new Adocao(tutor, pet, dto.motivo());
         adocaoRepository.save(adocao);
 
         emailService.enviarEmail(

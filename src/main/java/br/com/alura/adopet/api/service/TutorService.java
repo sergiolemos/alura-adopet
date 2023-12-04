@@ -15,22 +15,20 @@ public class TutorService {
     private TutorRepository tutorRepository;
 
     public void cadastrar(DadosCadastroTutorDto dto) {
-        boolean telefoneJaCadastrado = tutorRepository.existsByTelefone(dto.telefone());
-        boolean emailJaCadastrado = tutorRepository.existsByEmail(dto.email());
+        boolean jaCadastrado = tutorRepository.existsByTelefoneOrEmail(dto.telefone(), dto.email());
 
-        if (telefoneJaCadastrado || emailJaCadastrado) {
+        if (jaCadastrado) {
             throw new ValidacaoException("Telefone/Email já possuem cadastro");
         }
-        Tutor tutor = new Tutor(dto);
-        tutorRepository.save(tutor);
+        tutorRepository.save(new Tutor(dto));
     }
 
     public void atualizar(DadosAtualizarTutorDto dto) {
-        var tutor = tutorRepository.getReferenceById(dto.id());
+        Tutor tutor = tutorRepository.getReferenceById(dto.id());
         if (tutor == null) {
             throw new ValidacaoException("Tutor não localizado");
         }
-        tutor = new Tutor(dto);
-        tutorRepository.save(tutor);
+        tutor.atualizarDados(dto);
+
     }
 }
